@@ -11,7 +11,7 @@ export class EquipmentsService {
   constructor(private http:Http) { }
   
   fetchEquipments(){
-         return this.http.get('http://localhost:3000/api/equipments')
+         return this.http.get('http://159.89.170.175:3000/api/equipments')
           .map(
             (response) => response.json() )
             ; 
@@ -19,18 +19,18 @@ export class EquipmentsService {
 
   addEquipment(equipment:Equipment){
 
-    return this.http.post("http://localhost:3000/api/equipments",equipment);
+    return this.http.post("http://159.89.170.175:3000/api/equipments",equipment);
   }
 
   removeEquipment(id:string){
     
-      const url = `${"http://localhost:3000/api/equipments"}/${id}`;
+      const url = `${"http://159.89.170.175:3000/api/equipments"}/${id}`;
       return this.http.delete(url);
     
   }
 
   updateEquipment(equipment:Equipment){
-    const url = `${"http://localhost:3000/api/equipments"}/${equipment._id}`;
+    const url = `${"http://159.89.170.175:3000/api/equipments"}/${equipment._id}`;
     return this.http.put(url,equipment);
   }
 

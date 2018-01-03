@@ -11,32 +11,32 @@ export class DetailsService {
   constructor(private http:Http) { }
   
   fetchDetails(){
-         return this.http.get('http://localhost:3000/api/details')
+         return this.http.get('http://159.89.170.175:3000/api/details')
           .map(
             (response) => response.json() )
             ; 
       }
   fetchDetailsById(id:string){
-   // const url = `${"http://localhost:3000/api/repairs"}/${id}/${"details"}`;
-    const url = `${"http://localhost:3000/api/details"}/${id}`;
+   // const url = `${"http://159.89.170.175:3000/api/repairs"}/${id}/${"details"}`;
+    const url = `${"http://159.89.170.175:3000/api/details"}/${id}`;
     return this.http.get(url)
     .map(
       (response) => response.json() )
       ; 
 
-     // http://localhost:3000/api/repairs/5a3efa18f8e026139c014359/details
+     // http://159.89.170.175:3000/api/repairs/5a3efa18f8e026139c014359/details
   }
 
   addDetail(detail:Detail){
 
-    return this.http.post("http://localhost:3000/api/details",detail)
+    return this.http.post("http://159.89.170.175:3000/api/details",detail)
                        .map((response) => response.json());
   }
 
   removeDetail(id:string){
    
-     // const url = `${"http://localhost:3000/api/repairs"}/${id}/${"details"}`;
-      const url = `${"http://localhost:3000/api/details"}/${id}`;
+     // const url = `${"http://159.89.170.175:3000/api/repairs"}/${id}/${"details"}`;
+      const url = `${"http://159.89.170.175:3000/api/details"}/${id}`;
       return this.http.delete(url);
     
     
@@ -44,8 +44,8 @@ export class DetailsService {
 
   updateDetail(detail:Detail){
    // console.log(detail.repairId);
-    //const url = `${"http://localhost:3000/api/details/update/?where[repairId]="}${detail.repairId}`;
-    const url = `${"http://localhost:3000/api/details"}/${detail._id}`;
+    //const url = `${"http://159.89.170.175:3000/api/details/update/?where[repairId]="}${detail.repairId}`;
+    const url = `${"http://159.89.170.175:3000/api/details"}/${detail._id}`;
     return this.http.put(url, detail);
   }
 

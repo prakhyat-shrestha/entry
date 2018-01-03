@@ -10,7 +10,7 @@ export class EmployeesService {
   constructor(private http:Http) { }
   
   fetchEmployees(){
-         return this.http.get('http://localhost:3000/api/employees')
+         return this.http.get('http://159.89.170.175:3000/api/employees')
           .map(
             (response) => response.json() )
             ; 
@@ -18,18 +18,18 @@ export class EmployeesService {
 
   addEmployee(employee:Employee){
 
-    return this.http.post("http://localhost:3000/api/employees",employee);
+    return this.http.post("http://159.89.170.175:3000/api/employees",employee);
   }
 
   removeEmployee(id:string){
  
-      const url = `${"http://localhost:3000/api/employees"}/${id}`;
+      const url = `${"http://159.89.170.175:3000/api/employees"}/${id}`;
       return this.http.delete(url);
     
   }
 
   updateEmployee(employee:Employee){
-    const url = `${"http://localhost:3000/api/employees"}/${employee._id}`;
+    const url = `${"http://159.89.170.175:3000/api/employees"}/${employee._id}`;
     return this.http.put(url,employee);
   }
 

@@ -10,7 +10,7 @@ export class CustomersService {
   constructor(private http:Http) { }
   
   fetchCustomers(){
-         return this.http.get('http://localhost:3000/api/customers')
+         return this.http.get('http://159.89.170.175:3000/api/customers')
           .map(
             (response) => response.json() )
             ; 
@@ -18,18 +18,18 @@ export class CustomersService {
 
   addCustomer(customer:Customer){
 
-    return this.http.post("http://localhost:3000/api/customers",customer);
+    return this.http.post("http://159.89.170.175:3000/api/customers",customer);
   }
 
   removeCustomer(id:string){
     
-      const url = `${"http://localhost:3000/api/customers"}/${id}`;
+      const url = `${"http://159.89.170.175:3000/api/customers"}/${id}`;
       return this.http.delete(url);
     
   }
 
   updateCustomer(customer:Customer){
-    const url = `${"http://localhost:3000/api/customers"}/${customer._id}`;
+    const url = `${"http://159.89.170.175:3000/api/customers"}/${customer._id}`;
     return this.http.put(url,customer);
   }
 

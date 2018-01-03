@@ -11,7 +11,7 @@ export class BrandsService {
   constructor(private http:Http) { }
   
   fetchBrands(){
-         return this.http.get('http://localhost:3000/api/brands')
+         return this.http.get('http://159.89.170.175:3000/api/brands')
           .map(
             (response) => response.json() )
             ; 
@@ -19,18 +19,18 @@ export class BrandsService {
 
   addBrand(brand:Brand){
 
-    return this.http.post("http://localhost:3000/api/brands",brand);
+    return this.http.post("http://159.89.170.175:3000/api/brands",brand);
   }
 
   removeBrand(id:string){
    
-      const url = `${"http://localhost:3000/api/brands"}/${id}`;
+      const url = `${"http://159.89.170.175:3000/api/brands"}/${id}`;
       return this.http.delete(url);
     
   }
 
   updateBrand(brand:Brand){
-    const url = `${"http://localhost:3000/api/brands"}/${brand._id}`;
+    const url = `${"http://159.89.170.175:3000/api/brands"}/${brand._id}`;
     return this.http.put(url, brand);
   }
 

@@ -10,15 +10,15 @@ export class ModelsService {
   constructor(private http:Http) { }
   
   fetchModels(){
-    //return this.http.get('http://localhost:3000/api/models?filter[include]=brand&filter[include]=equipment')
-    return this.http.get('http://localhost:3000/api/models')
+    //return this.http.get('http://159.89.170.175:3000/api/models?filter[include]=brand&filter[include]=equipment')
+    return this.http.get('http://159.89.170.175:3000/api/models')
           .map(
             (response) => response.json() )
             ; 
       }
 
       fetchModelsOnly(){
-        return this.http.get('http://localhost:3000/api/models')
+        return this.http.get('http://159.89.170.175:3000/api/models')
               .map(
                 (response) => response.json() )
                 ; 
@@ -27,18 +27,18 @@ export class ModelsService {
 
   addModel(model:Model){
 
-    return this.http.post("http://localhost:3000/api/models",model);
+    return this.http.post("http://159.89.170.175:3000/api/models",model);
   }
 
   removeModel(id:string){
    
-      const url = `${"http://localhost:3000/api/models"}/${id}`;
+      const url = `${"http://159.89.170.175:3000/api/models"}/${id}`;
       return this.http.delete(url);
     
   }
 
   updateModel(model:Model){
-    const url = `${"http://localhost:3000/api/models"}/${model._id}`;
+    const url = `${"http://159.89.170.175:3000/api/models"}/${model._id}`;
     return this.http.put(url, model);
   }
 
