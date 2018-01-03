@@ -1,0 +1,313 @@
+
+<app-navigation>
+</app-navigation>
+
+<div class="container-fluid">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-2">
+        <h2>Repairs List</h2>
+        
+      </div>
+      <div class="col-md-8 searchBox"><input type="text" [(ngModel)]="queryString" id="search" placeholder="Search Customer"></div>
+      <div class="col-md-2 addButton-right">
+        <button class="btn btn-primary" (click)="showAddRepairForm()" data-toggle="modal" data-target="#addRepairModal">
+          <i class="fa fa-plus"></i>&nbsp;Repair
+        </button>
+      </div>
+    </div>
+
+
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+        <tr>
+          <th class="">S.N</th>
+          <th class="">Bill No</th>
+          <th class="">Date Received</th>
+          <th class="">Customer</th>
+          <th class="">Company</th>
+          <th class="">Model</th>
+          <th class="status">Status</th>
+          <th class="">Assigned To</th>
+          <th class="">Staff Note</th>
+          <th class="">Problem Reported</th>
+          <th class="">&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let repair of repairs  | FilterPipe: queryString | paginate:{ itemsPerPage: 5, currentPage: p }; let ind=index">
+          <td>{{ind+1}}</td>
+          <td>{{repair.billNo}}</td>
+          <td>{{repair.dateReceived | date}}</td>   
+          <td>{{repair.customerId.name}}</td> 
+          <td>{{repair.customerId.company}}</td>
+          <td>{{repair.modelId.model_Name}}</td>
+          <td>{{repair.stateId.stateName}}</td>
+          <td>{{repair.employeeId.employeeName}}</td>
+
+          <td>{{repair.note}}</td>
+          <td>{{repair.problem}}</td>
+          
+          <td>
+            <button class="btn btn-success" (click)="showRepairDetails(repair)" data-toggle="modal" data-target="#addRepairModal">
+              <i class="fa fa-eye"></i>
+            </button>
+            <button class="btn btn-info" (click)="showEditRepairForm(repair)" data-toggle="modal" data-target="#addRepairModal">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button class="btn btn-danger" (click)="removeRepair(repair)">
+              <i class="fa fa-minus"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+  </div>
+</div>
+
+<div class="container">
+    <form *ngIf="repairForm" #repairEntryForm="ngForm" role="form">
+      <div class="modal fade" id="addRepairModal" tabindex="-1" role="dialog" aria-labelledby="addRepairModal" aria-hidden="true"
+        data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" (click)="cancelAddEdit()" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel" *ngIf="!showDetails">Add/Edit Repair</h4>
+              <h4 class="modal-title" id="myModalLabel" *ngIf="showDetails">Repair Details</h4>
+            </div>
+            <div class="modal-body">
+              <!-- START -->
+    
+                
+                      <div class="row">
+                        <div class="col-sm-4">
+                          <div>
+                              <div class="form-group">
+                                <label for="customers">Select a Customer</label>
+                                <a data-dismiss="modal" (click)="createNewCustomerLinkClicked()" 
+                                    class="createNewCustomerLink">Create New</a>
+                                <select class="form-control" name="customers" 
+                                        [(ngModel)]="newRepair.customerId">
+                                  <option *ngFor="let cust of customers" 
+                                          value="{{cust._id}}">{{cust.name}}({{cust.company}}-{{cust.address}})</option>
+                                </select>
+                              </div>
+
+                              <div class="form-group" [class.has-success]="billNo.dirty && billNo.valid" 
+                                    [class.has-error]="(billNo.touched) && !(billNo.valid)">
+                                  <label for="billNo">Bill No *</label>
+                                  <input type="text" class="form-control" 
+                                        id="billNo" name="billNo" id="billNo" 
+                                        #billNo="ngModel" 
+                                        [(ngModel)]="newRepair.billNo"
+                                    required>
+                                  <div *ngIf="(billNo.dirty||billNo.touched) && !(billNo.valid)" class="alert alert-danger">
+                                    Name is required!
+                                  </div>
+                              </div>
+
+                              <div class="form-group">
+                                <label for="states">Repair Status</label>
+                                <select class="form-control" name="states" [(ngModel)]="newRepair.stateId">
+                                  <option *ngFor="let state of states;let i=index" 
+                                          value="{{state._id}}"
+                                          >{{state.stateName}}</option>
+                                </select>
+                              </div>
+
+                              <div class="form-group">
+                                <label for="problem">Problem</label>
+                                <textarea class="form-control" id="problem" 
+                                          name="problem" 
+                                          [(ngModel)]="newRepair.problem" rows="4"></textarea>
+                              </div>
+                              
+                              <div class="form-group">
+                                <label for="estimatedPrice">Estimated Cost</label>
+                                <input type="text" class="form-control" 
+                                      id="estimatedPrice" name="estimatedPrice" 
+                                      [(ngModel)]="newRepair.estimatedPrice">
+                              </div>
+
+                              <div class="form-group">
+                                <label for="chargedPrice">Customer Charged</label>
+                                <input type="text" class="form-control" 
+                                      id="chargedPrice" name="chargedPrice" 
+                                      [(ngModel)]="newRepair.chargedPrice">
+                              </div>
+
+                          </div>
+                        </div>
+                        <div class="col-sm-8">
+                          <div>
+<!--                               <div class="form-group col-sm-6">
+                                <label for="dateReceived">Date Received</label>
+                                <input class="form-control" 
+                                        type="date" name="dateReceived" 
+                                        id="dateReceived" 
+                                        [(ngModel)]="newRepair.dateReceived"
+                                        >
+                              </div>  -->
+                              <div class="form-group col-sm-6">
+                                  <label for="dateReceived">Date Received</label>
+                                          <owl-date-time  [(ngModel)]="newRepair.dateReceived"
+                                          [dateFormat]="'YYYY-MM-DD'"
+                                          [type]="'calendar'" [placeHolder]="'yyyy/mm/dd'"
+                                          name="dateReceived" 
+                                          [inputId]="'dateReceived'"></owl-date-time>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="dateReturned">Date Returned</label>
+                                            <owl-date-time  [(ngModel)]="newRepair.dateReturned"
+                                            [dateFormat]="'YYYY-MM-DD'"
+                                            [type]="'calendar'" [placeHolder]="'yyyy/mm/dd'"
+                                            name="dateReturned" 
+                                            [inputId]="'dateReturned'"></owl-date-time>
+                                  </div>
+
+                                  <div class="form-group col-sm-4 top-buffer">
+                                    <label for="equipments">Equipment Type</label>
+                                    <select class="form-control" 
+                                            name="equipments" 
+                                            [(ngModel)]="newRepair.equipmentId"
+                                            >
+                                      <option *ngFor="let equipment of equipments" value="{{equipment._id}}">{{equipment.equipmentName}}</option>
+                                    </select>
+                                  </div>
+                                  <div class="form-group col-sm-4 top-buffer"
+                                        >
+                                    <label for="brands">Brand *</label>
+                                    <select class="form-control" name="brands" 
+                                            [(ngModel)]="newRepair.brandId"
+                                            (change)="onSelect($event.target.value)"
+                                            required>
+                                            <!-- <option value="0">--Select--</option> -->
+                                      <option *ngFor="let brand of brands" value="{{brand._id}}">{{brand.brandName}}</option>
+                                    </select>
+                                  </div>
+                                  <div class="form-group col-sm-4 top-buffer">
+                                    <label for="models">Model *</label>
+                                    
+                                    <select class="form-control" name="models" 
+                                            [(ngModel)]="newRepair.modelId"
+                                            >
+                                           
+                                      <!-- <option *ngIf='newRepair.brandId == 0' value="0">--Select--</option> -->
+                                      <option *ngFor="let model of models" value="{{model._id}}">{{model.model_Name}}</option>
+                                    </select>
+                                  </div>
+                                  <div class="form-group col-sm-12">
+                                    <label for="serialNo">Serial No / IMEI</label>
+                                    <input type="text" class="form-control" id="serialNo" name="serialNo" [(ngModel)]="newRepair.serialNo">
+                                  </div>
+                                  <div class="form-group col-sm-12">
+                                    <label for="accessories">Accessories Delivered</label>
+                                    <br>
+                                    <div class="checkbox-inline">
+                                      <label class=""><input type="checkbox" value="" name="cover"
+                                                            [(ngModel)]="newDetail.cover"
+                                                            >Cover</label>
+                                    </div>
+                                    <div class="checkbox-inline">
+                                      <label><input type="checkbox" 
+                                                    value=""
+                                                    name="battery"
+                                                    [(ngModel)]="newDetail.battery">
+                                                    Battery</label>
+                                    </div>
+                                    <div class="checkbox-inline">
+                                      <label><input type="checkbox" 
+                                                    value=""
+                                                    name="filter"
+                                                    [(ngModel)]="newDetail.filter">Filter</label>
+                                    </div>
+                                    <div class="checkbox-inline">
+                                      <label><input type="checkbox" value=""
+                                                    name="fcap"
+                                                    [(ngModel)]="newDetail.fcap">F-Cap</label>
+                                    </div>
+                                    <div class="checkbox-inline">
+                                      <label><input type="checkbox" 
+                                                    value=""
+                                                    name="rcap"
+                                                    [(ngModel)]="newDetail.rcap">R-Cap</label>
+                                    </div>
+
+                                  </div>
+
+                                  <div class="form-group col-sm-12">
+                                    
+                                    <div class="checkbox-inline">
+                                      <label><input type="checkbox" value=""
+                                                    name="bcap"
+                                                    [(ngModel)]="newDetail.bcap">B-Cap</label>
+                                    </div>
+                                    <div class="checkbox-inline">
+                                      <label><input type="checkbox" value=""
+                                                     name="strap"
+                                                      [(ngModel)]="newDetail.strap">Strap</label>
+                                    </div>
+                                    <div class="checkbox-inline">
+                                      <label><input type="checkbox" value=""
+                                                    name="card"
+                                                    [(ngModel)]="newDetail.card">Card</label>
+                                    </div>
+                                    <div class="checkbox-inline">
+                                      <label><input type="checkbox" value=""
+                                                     name="eyePiece"
+                                                    [(ngModel)]="newDetail.eyePiece">Eye Piece</label>
+                                    </div>
+                                    <div class="checkbox-inline">
+                                      <label><input type="checkbox" value=""
+                                                     name="hood"
+                                                    [(ngModel)]="newDetail.hood">Hood</label>
+                                    </div>
+                                  </div>
+                                
+                                  <div class="form-group col-sm-6">
+                                    <label for="note">Staff Note</label>
+                                    <textarea class="form-control" id="note" 
+                                              name="note" 
+                                              [(ngModel)]="newRepair.note" rows="4"></textarea>
+                                  </div>
+                                  <div class="form-group col-sm-6">
+                                    <label for="description">Repair Description</label>
+                                    <textarea class="form-control" id="description" 
+                                              name="description" 
+                                              [(ngModel)]="newRepair.description" rows="4"></textarea>
+                                  </div>
+                                  <div class="form-group col-sm-6 top-buffer">
+                                    <label for="employees">Assigned To</label>
+                                    <select class="form-control" name="employees" [(ngModel)]="newRepair.employeeId">
+                                      <option *ngFor="let employee of employees" value="{{employee._id}}">{{employee.employeeName}}</option>
+                                    </select>
+                                  </div>
+
+                                 
+                          </div>
+                        </div>
+                      </div>
+                
+    
+              <!-- FIN -->
+             
+            </div> 
+            <div class="modal-footer" *ngIf="!showDetails">
+                <p style="float:left;">*Bill No, *Brand and *Model is Required!!</p>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="saveRepair(newRepair,newDetail)" [disabled]="!repairEntryForm.form.valid">Save changes</button>
+    
+    
+              <button type="button" class="btn btn-default" data-dismiss="modal" (click)="cancelAddEdit()">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    </div>
+
+    

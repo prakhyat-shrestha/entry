@@ -1,0 +1,135 @@
+
+<app-navigation></app-navigation>
+
+<div class="container">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-10"><h2>Equipments List</h2></div>
+      <div class="col-md-2 addButton-right">    
+        <button class="btn btn-primary"
+        (click)="showAddEquipmentForm()"
+        data-toggle="modal" 
+        data-target="#addEquipmentModal">
+    <i class="fa fa-plus"></i>&nbsp;Equipment
+    </button></div>
+    </div>
+    
+
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+        <tr>
+          <th class="text-center">S.N</th>
+          <th class="text-center">Equipment Name</th>
+          <th class="text-center">Equipment Description</th>
+          
+          <th class="text-center">&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor = "let equipment of equipments;let ind=index">
+          <td>{{ind+1}}</td>
+          <td>{{equipment.equipmentName}}</td>
+          <td>{{equipment.equipmentDescription}}</td>
+          
+          <td>
+            <button class="btn btn-success"
+              (click)="showEquipmentDetails(equipment)"
+              data-toggle="modal" 
+            data-target="#addEquipmentModal">
+              <i class="fa fa-eye"></i>
+            </button>
+            <button class="btn btn-info"
+                    (click)="showEditEquipmentForm(equipment)"
+                    data-toggle="modal" 
+                  data-target="#addEquipmentModal">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button class="btn btn-danger"
+                    (click)="removeEquipment(equipment._id)">
+                <i class="fa fa-minus"></i>
+              </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <form *ngIf="equipmentForm" #equipmentEntryForm="ngForm">
+      <div class="modal fade" 
+            id="addEquipmentModal" 
+            tabindex="-1" role="dialog" 
+            aria-labelledby="addEquipmentModal" 
+            aria-hidden="true"
+            data-backdrop="static" 
+            data-keyboard="false">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" 
+                      class="close" 
+                      (click)="cancelAddEdit()"
+                      data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel" *ngIf="!showDetails">Add/Edit Equipment</h4>
+              <h4 class="modal-title" id="myModalLabel" *ngIf="showDetails">Equipment Details</h4>
+            </div>
+            <div class="modal-body">
+              
+                
+
+                <div class="form-group" 
+                [class.has-success]="equipmentName.dirty && equipmentName.valid"
+                [class.has-error]="(equipmentName.touched) && !(equipmentName.valid)">
+
+
+                <label for="equipmentName">Equipment Name</label>
+                  <input type="text" 
+                          class="form-control"
+                          id="equipmentName"
+                          name="equipmentName"
+                          id="equipmentName"
+                          #equipmentName="ngModel"
+                          [(ngModel)]="newEquipment.equipmentName"
+                          required   
+                          >
+                  <div *ngIf="(equipmentName.dirty||equipmentName.touched) && !(equipmentName.valid)" class="alert alert-danger">
+                      Name is required!
+                  </div>
+
+                </div>
+                <div class="form-group">
+                    <label for="equipmentDesc">Description</label>
+                    <textarea
+                          class="form-control"
+                         id="equipmentDesc"
+                          name="equipmentDesc"
+                          [(ngModel)]="newEquipment.equipmentDescription"
+                          rows="3"
+                          ></textarea>
+                 </div>
+   
+            </div>
+            <div class="modal-footer" *ngIf="!showDetails" >
+
+                <button type="button" 
+                class="btn btn-primary"
+                data-dismiss="modal" 
+                (click)="saveEquipment(newEquipment)"
+                [disabled]="!equipmentEntryForm.form.valid"
+                >Save changes</button>
+                
+
+              <button type="button" 
+                      class="btn btn-default" 
+                      data-dismiss="modal"
+                      (click)="cancelAddEdit()"
+                      >Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+

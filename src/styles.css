@@ -1,0 +1,26 @@
+/* You can add global styles to this file, and also import other style files */
+
+.addButton-right{
+    text-align: right;
+}
+
+.createNewCustomerLink{
+    
+    text-decoration: underline;
+    margin-left: 60px;
+    cursor: pointer;
+}
+
+.top-buffer { margin-top:20px; }
+
+.modal-content {
+    background-color: #fa8cc1!important;
+}
+
+.status {
+    background-color: chartreuse;
+}
+
+.searchBox{
+    padding-top: 24px;
+}

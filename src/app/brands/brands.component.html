@@ -1,0 +1,135 @@
+
+<app-navigation></app-navigation>
+
+<div class="container">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-10"><h2>Brands List</h2></div>
+      <div class="col-md-2 addButton-right">    
+        <button class="btn btn-primary"
+        (click)="showAddBrandForm()"
+        data-toggle="modal" 
+        data-target="#addBrandModal">
+    <i class="fa fa-plus"></i>&nbsp;Brand
+    </button></div>
+    </div>
+    
+
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+        <tr>
+          <th class="text-center">S.N</th>
+          <th class="text-center">Brand Name</th>
+          <th class="text-center">Brand Description</th>
+          
+          <th class="text-center">&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor = "let brand of brands;let ind=index">
+          <td>{{ind+1}}</td>
+          <td>{{brand.brandName}}</td>
+          <td>{{brand.brandDescription}}</td>
+          
+          <td>
+            <button class="btn btn-success"
+              (click)="showBrandDetails(brand)"
+              data-toggle="modal" 
+            data-target="#addBrandModal">
+              <i class="fa fa-eye"></i>
+            </button>
+            <button class="btn btn-info"
+                    (click)="showEditBrandForm(brand)"
+                    data-toggle="modal" 
+                  data-target="#addBrandModal">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button class="btn btn-danger"
+                    (click)="removeBrand(brand._id)">
+                <i class="fa fa-minus"></i>
+              </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <form *ngIf="brandForm" #brandEntryForm="ngForm">
+      <div class="modal fade" 
+            id="addBrandModal" 
+            tabindex="-1" role="dialog" 
+            aria-labelledby="addBrandModal" 
+            aria-hidden="true"
+            data-backdrop="static" 
+            data-keyboard="false">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" 
+                      class="close" 
+                      (click)="cancelAddEdit()"
+                      data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel" *ngIf="!showDetails">Add/Edit Brand</h4>
+              <h4 class="modal-title" id="myModalLabel" *ngIf="showDetails">Brand Details</h4>
+            </div>
+            <div class="modal-body">
+              
+                
+
+                <div class="form-group" 
+                [class.has-success]="brandName.dirty && brandName.valid"
+                [class.has-error]="(brandName.touched) && !(brandName.valid)">
+
+
+                <label for="brandName">Brand Name</label>
+                  <input type="text" 
+                          class="form-control"
+                          id="brandName"
+                          name="brandName"
+                          id="brandName"
+                          #brandName="ngModel"
+                          [(ngModel)]="newBrand.brandName"
+                          required   
+                          >
+                  <div *ngIf="(brandName.dirty||brandName.touched) && !(brandName.valid)" class="alert alert-danger">
+                      Name is required!
+                  </div>
+
+                </div>
+                <div class="form-group">
+                    <label for="brandDesc">Description</label>
+                    <textarea
+                          class="form-control"
+                         id="brandDesc"
+                          name="brandDesc"
+                          [(ngModel)]="newBrand.brandDescription"
+                          rows="3"
+                          ></textarea>
+                 </div>
+   
+            </div>
+            <div class="modal-footer" *ngIf="!showDetails" >
+
+                <button type="button" 
+                class="btn btn-primary"
+                data-dismiss="modal" 
+                (click)="saveBrand(newBrand)"
+                [disabled]="!brandEntryForm.form.valid"
+                >Save changes</button>
+                
+
+              <button type="button" 
+                      class="btn btn-default" 
+                      data-dismiss="modal"
+                      (click)="cancelAddEdit()"
+                      >Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+

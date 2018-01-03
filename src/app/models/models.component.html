@@ -1,0 +1,160 @@
+
+<app-navigation></app-navigation>
+
+<div class="container">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-10"><h2>Models List</h2></div>
+      <div class="col-md-2 addButton-right">    
+        <button class="btn btn-primary"
+        (click)="showAddModelForm()"
+        data-toggle="modal" 
+        data-target="#addModelModal">
+    <i class="fa fa-plus"></i>&nbsp;Model
+    </button></div>
+    </div>
+    
+
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+        <tr>
+          <th>S.N</th>
+          <th>Model Name</th>
+          <th>Model Description</th>
+          <th>Brand</th>
+          <th>Equipment Type</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor = "let model of models;let ind=index">
+          <td>{{ind+1}}</td>
+          <td>{{model.model_Name}}</td>
+          <td>{{model.model_Description}}</td>
+          <td>{{model.brandId.brandName}}</td>
+          <td>{{model.equipmentId.equipmentName}}</td>  
+          <td>
+            <button class="btn btn-success"
+              (click)="showModelDetails(model)"
+              data-toggle="modal" 
+            data-target="#addModelModal">
+              <i class="fa fa-eye"></i>
+            </button>
+            <button class="btn btn-info"
+                    (click)="showEditModelForm(model)"
+                    data-toggle="modal" 
+                  data-target="#addModelModal">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button class="btn btn-danger"
+                    (click)="removeModel(model._id)">
+                <i class="fa fa-minus"></i>
+              </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <form *ngIf="modelForm" #modelEntryForm="ngForm">
+      <div class="modal fade" 
+            id="addModelModal" 
+            tabindex="-1" role="dialog" 
+            aria-labelledby="addModelModal" 
+            aria-hidden="true"
+            data-backdrop="static" 
+            data-keyboard="false">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" 
+                      class="close" 
+                      (click)="cancelAddEdit()"
+                      data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel" *ngIf="!showDetails">Add/Edit Model</h4>
+              <h4 class="modal-title" id="myModalLabel" *ngIf="showDetails">Model Details</h4>
+            </div>
+            <div class="modal-body">
+              
+                
+
+                <div class="form-group" 
+                [class.has-success]="model_Name.dirty && model_Name.valid"
+                [class.has-error]="(model_Name.touched) && !(model_Name.valid)">
+
+
+                <label for="model_Name">Model Name *</label>
+                  <input type="text" 
+                          class="form-control"
+                          id="model_Name"
+                          name="model_Name"
+                          id="model_Name"
+                          #model_Name="ngModel"
+                          [(ngModel)]="newModel.model_Name"
+                          required   
+                          >
+                  <div *ngIf="(model_Name.dirty||model_Name.touched) && !(model_Name.valid)" class="alert alert-danger">
+                      Name is required!
+                  </div>
+
+                </div>
+                <div class="form-group">
+                    <label for="modelDesc">Description</label>
+                    <textarea
+                          class="form-control"
+                          id="modelDesc"
+                          name="modelDesc"
+                          [(ngModel)]="newModel.model_Description"
+                          rows="3"
+                          ></textarea>
+                 </div>
+                  <div class="form-group">
+                   <label for="modelBrand">Brand</label><br>
+                   <select  class="form-control" 
+                            name="brands" 
+                             [(ngModel)]="newModel.brandId"
+                            >
+                      <option value="" disabled >Choose a Brand</option>
+                      <option *ngFor="let brand of brands" value="{{brand._id}}">
+                               {{brand.brandName}}</option>
+                    </select>
+
+                 </div>
+
+
+                 <div class="form-group">
+                    <label for="modelBrand">Equipment Type</label><br>
+                    <select  class="form-control" 
+                             name="equipments" 
+                             [(ngModel)]="newModel.equipmentId">
+                       <option *ngFor="let equipment of equipments" value="{{equipment._id}}">{{equipment.equipmentName}}</option>
+                     </select>
+ 
+                  </div>
+
+                
+            </div>
+            <div class="modal-footer" *ngIf="!showDetails" >
+
+                <button type="button" 
+                class="btn btn-primary"
+                data-dismiss="modal" 
+                (click)="saveModel(newModel)"
+                [disabled]="!modelEntryForm.form.valid"
+                >Save changes</button>
+                
+
+              <button type="button" 
+                      class="btn btn-default" 
+                      data-dismiss="modal"
+                      (click)="cancelAddEdit()"
+                      >Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+

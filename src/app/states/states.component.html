@@ -1,0 +1,134 @@
+
+<app-navigation></app-navigation>
+
+<div class="container">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-10"><h2>States List</h2></div>
+      <div class="col-md-2 addButton-right">    
+        <button class="btn btn-primary"
+        (click)="showAddStateForm()"
+        data-toggle="modal" 
+        data-target="#addStateModal">
+    <i class="fa fa-plus"></i>&nbsp;State
+    </button></div>
+    </div>
+    
+
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+        <tr>
+          <th class="text-center">S.N</th>
+          <th class="text-center">State Name</th>
+          <th class="text-center">State Description</th>
+          
+          <th class="text-center">&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor = "let state of states;let ind=index">
+          <td>{{ind+1}}</td>
+          <td>{{state.stateName}}</td>
+          <td>{{state.stateDescription}}</td>
+          
+          <td>
+            <button class="btn btn-success"
+              (click)="showStateDetails(state)"
+              data-toggle="modal" 
+            data-target="#addStateModal">
+              <i class="fa fa-eye"></i>
+            </button>
+            <button class="btn btn-info"
+                    (click)="showEditStateForm(state)"
+                    data-toggle="modal" 
+                  data-target="#addStateModal">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button class="btn btn-danger"
+                    (click)="removeState(state._id)">
+                <i class="fa fa-minus"></i>
+              </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <form *ngIf="stateForm" #stateEntryForm="ngForm">
+      <div class="modal fade" 
+            id="addStateModal" 
+            tabindex="-1" role="dialog" 
+            aria-labelledby="addStateModal" 
+            aria-hidden="true"
+            data-backdrop="static" 
+            data-keyboard="false">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" 
+                      class="close" 
+                      (click)="cancelAddEdit()"
+                      data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel" *ngIf="!showDetails">Add/Edit State</h4>
+              <h4 class="modal-title" id="myModalLabel" *ngIf="showDetails">State Details</h4>
+            </div>
+            <div class="modal-body">
+              
+                
+
+                <div class="form-group" 
+                [class.has-success]="stateName.dirty && stateName.valid"
+                [class.has-error]="(stateName.touched) && !(stateName.valid)">
+
+
+                <label for="stateName">State Name *</label>
+                  <input type="text" 
+                          class="form-control"
+                          id="stateName"
+                          name="stateName"
+                          id="stateName"
+                          #stateName="ngModel"
+                          [(ngModel)]="newState.stateName"
+                          required   
+                          >
+                  <div *ngIf="(stateName.dirty||stateName.touched) && !(stateName.valid)" class="alert alert-danger">
+                      Name is required!
+                  </div>
+
+                </div>
+                <div class="form-group">
+                    <label for="stateDesc">Description</label>
+                    <textarea
+                          class="form-control"
+                          id="stateDesc"
+                          name="stateDesc"
+                          [(ngModel)]="newState.stateDescription"
+                          rows="3"
+                          ></textarea>
+                 </div>
+   
+            </div>
+            <div class="modal-footer" *ngIf="!showDetails" >
+
+                <button type="button" 
+                class="btn btn-primary"
+                data-dismiss="modal" 
+                (click)="saveState(newState)"
+                [disabled]="!stateEntryForm.form.valid"
+                >Save changes</button>
+                
+
+              <button type="button" 
+                      class="btn btn-default" 
+                      data-dismiss="modal"
+                      (click)="cancelAddEdit()"
+                      >Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
