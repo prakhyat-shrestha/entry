@@ -476,18 +476,18 @@ var BrandsService = (function () {
         this.http = http;
     }
     BrandsService.prototype.fetchBrands = function () {
-        return this.http.get('http://localhost:3000/api/brands')
+        return this.http.get('http://159.89.170.175:3000/api/brands')
             .map(function (response) { return response.json(); });
     };
     BrandsService.prototype.addBrand = function (brand) {
-        return this.http.post("http://localhost:3000/api/brands", brand);
+        return this.http.post("http://159.89.170.175:3000/api/brands", brand);
     };
     BrandsService.prototype.removeBrand = function (id) {
-        var url = "http://localhost:3000/api/brands" + "/" + id;
+        var url = "http://159.89.170.175:3000/api/brands" + "/" + id;
         return this.http.delete(url);
     };
     BrandsService.prototype.updateBrand = function (brand) {
-        var url = "http://localhost:3000/api/brands" + "/" + brand._id;
+        var url = "http://159.89.170.175:3000/api/brands" + "/" + brand._id;
         return this.http.put(url, brand);
     };
     BrandsService = __decorate([
@@ -689,18 +689,18 @@ var CustomersService = (function () {
         this.http = http;
     }
     CustomersService.prototype.fetchCustomers = function () {
-        return this.http.get('http://localhost:3000/api/customers')
+        return this.http.get('http://159.89.170.175:3000/api/customers')
             .map(function (response) { return response.json(); });
     };
     CustomersService.prototype.addCustomer = function (customer) {
-        return this.http.post("http://localhost:3000/api/customers", customer);
+        return this.http.post("http://159.89.170.175:3000/api/customers", customer);
     };
     CustomersService.prototype.removeCustomer = function (id) {
-        var url = "http://localhost:3000/api/customers" + "/" + id;
+        var url = "http://159.89.170.175:3000/api/customers" + "/" + id;
         return this.http.delete(url);
     };
     CustomersService.prototype.updateCustomer = function (customer) {
-        var url = "http://localhost:3000/api/customers" + "/" + customer._id;
+        var url = "http://159.89.170.175:3000/api/customers" + "/" + customer._id;
         return this.http.put(url, customer);
     };
     CustomersService = __decorate([
@@ -953,29 +953,29 @@ var DetailsService = (function () {
         this.http = http;
     }
     DetailsService.prototype.fetchDetails = function () {
-        return this.http.get('http://localhost:3000/api/details')
+        return this.http.get('http://159.89.170.175:3000/api/details')
             .map(function (response) { return response.json(); });
     };
     DetailsService.prototype.fetchDetailsById = function (id) {
-        // const url = `${"http://localhost:3000/api/repairs"}/${id}/${"details"}`;
-        var url = "http://localhost:3000/api/details" + "/" + id;
+        // const url = `${"http://159.89.170.175:3000/api/repairs"}/${id}/${"details"}`;
+        var url = "http://159.89.170.175:3000/api/details" + "/" + id;
         return this.http.get(url)
             .map(function (response) { return response.json(); });
-        // http://localhost:3000/api/repairs/5a3efa18f8e026139c014359/details
+        // http://159.89.170.175:3000/api/repairs/5a3efa18f8e026139c014359/details
     };
     DetailsService.prototype.addDetail = function (detail) {
-        return this.http.post("http://localhost:3000/api/details", detail)
+        return this.http.post("http://159.89.170.175:3000/api/details", detail)
             .map(function (response) { return response.json(); });
     };
     DetailsService.prototype.removeDetail = function (id) {
-        // const url = `${"http://localhost:3000/api/repairs"}/${id}/${"details"}`;
-        var url = "http://localhost:3000/api/details" + "/" + id;
+        // const url = `${"http://159.89.170.175:3000/api/repairs"}/${id}/${"details"}`;
+        var url = "http://159.89.170.175:3000/api/details" + "/" + id;
         return this.http.delete(url);
     };
     DetailsService.prototype.updateDetail = function (detail) {
         // console.log(detail.repairId);
-        //const url = `${"http://localhost:3000/api/details/update/?where[repairId]="}${detail.repairId}`;
-        var url = "http://localhost:3000/api/details" + "/" + detail._id;
+        //const url = `${"http://159.89.170.175:3000/api/details/update/?where[repairId]="}${detail.repairId}`;
+        var url = "http://159.89.170.175:3000/api/details" + "/" + detail._id;
         return this.http.put(url, detail);
     };
     DetailsService = __decorate([
@@ -1166,18 +1166,18 @@ var EmployeesService = (function () {
         this.http = http;
     }
     EmployeesService.prototype.fetchEmployees = function () {
-        return this.http.get('http://localhost:3000/api/employees')
+        return this.http.get('http://159.89.170.175:3000/api/employees')
             .map(function (response) { return response.json(); });
     };
     EmployeesService.prototype.addEmployee = function (employee) {
-        return this.http.post("http://localhost:3000/api/employees", employee);
+        return this.http.post("http://159.89.170.175:3000/api/employees", employee);
     };
     EmployeesService.prototype.removeEmployee = function (id) {
-        var url = "http://localhost:3000/api/employees" + "/" + id;
+        var url = "http://159.89.170.175:3000/api/employees" + "/" + id;
         return this.http.delete(url);
     };
     EmployeesService.prototype.updateEmployee = function (employee) {
-        var url = "http://localhost:3000/api/employees" + "/" + employee._id;
+        var url = "http://159.89.170.175:3000/api/employees" + "/" + employee._id;
         return this.http.put(url, employee);
     };
     EmployeesService = __decorate([
@@ -1368,18 +1368,18 @@ var EquipmentsService = (function () {
         this.http = http;
     }
     EquipmentsService.prototype.fetchEquipments = function () {
-        return this.http.get('http://localhost:3000/api/equipments')
+        return this.http.get('http://159.89.170.175:3000/api/equipments')
             .map(function (response) { return response.json(); });
     };
     EquipmentsService.prototype.addEquipment = function (equipment) {
-        return this.http.post("http://localhost:3000/api/equipments", equipment);
+        return this.http.post("http://159.89.170.175:3000/api/equipments", equipment);
     };
     EquipmentsService.prototype.removeEquipment = function (id) {
-        var url = "http://localhost:3000/api/equipments" + "/" + id;
+        var url = "http://159.89.170.175:3000/api/equipments" + "/" + id;
         return this.http.delete(url);
     };
     EquipmentsService.prototype.updateEquipment = function (equipment) {
-        var url = "http://localhost:3000/api/equipments" + "/" + equipment._id;
+        var url = "http://159.89.170.175:3000/api/equipments" + "/" + equipment._id;
         return this.http.put(url, equipment);
     };
     EquipmentsService = __decorate([
@@ -1757,23 +1757,23 @@ var ModelsService = (function () {
         this.http = http;
     }
     ModelsService.prototype.fetchModels = function () {
-        //return this.http.get('http://localhost:3000/api/models?filter[include]=brand&filter[include]=equipment')
-        return this.http.get('http://localhost:3000/api/models')
+        //return this.http.get('http://159.89.170.175:3000/api/models?filter[include]=brand&filter[include]=equipment')
+        return this.http.get('http://159.89.170.175:3000/api/models')
             .map(function (response) { return response.json(); });
     };
     ModelsService.prototype.fetchModelsOnly = function () {
-        return this.http.get('http://localhost:3000/api/models')
+        return this.http.get('http://159.89.170.175:3000/api/models')
             .map(function (response) { return response.json(); });
     };
     ModelsService.prototype.addModel = function (model) {
-        return this.http.post("http://localhost:3000/api/models", model);
+        return this.http.post("http://159.89.170.175:3000/api/models", model);
     };
     ModelsService.prototype.removeModel = function (id) {
-        var url = "http://localhost:3000/api/models" + "/" + id;
+        var url = "http://159.89.170.175:3000/api/models" + "/" + id;
         return this.http.delete(url);
     };
     ModelsService.prototype.updateModel = function (model) {
-        var url = "http://localhost:3000/api/models" + "/" + model._id;
+        var url = "http://159.89.170.175:3000/api/models" + "/" + model._id;
         return this.http.put(url, model);
     };
     ModelsService = __decorate([
@@ -2316,19 +2316,19 @@ var RepairsService = (function () {
         this.http = http;
     }
     RepairsService.prototype.fetchRepairs = function () {
-        return this.http.get("http://localhost:3000/api/repairs")
+        return this.http.get("http://159.89.170.175:3000/api/repairs")
             .map(function (response) { return response.json(); });
     };
     RepairsService.prototype.addRepair = function (repair) {
-        return this.http.post("http://localhost:3000/api/repairs", repair)
+        return this.http.post("http://159.89.170.175:3000/api/repairs", repair)
             .map(function (response) { return response.json(); });
     };
     RepairsService.prototype.removeRepair = function (id) {
-        var url = "http://localhost:3000/api/repairs" + "/" + id;
+        var url = "http://159.89.170.175:3000/api/repairs" + "/" + id;
         return this.http.delete(url);
     };
     RepairsService.prototype.updateRepair = function (repair) {
-        var url = "http://localhost:3000/api/repairs" + "/" + repair._id;
+        var url = "http://159.89.170.175:3000/api/repairs" + "/" + repair._id;
         return this.http.put(url, repair);
     };
     RepairsService = __decorate([
@@ -2524,18 +2524,18 @@ var StatesService = (function () {
         this.http = http;
     }
     StatesService.prototype.fetchStates = function () {
-        return this.http.get('http://localhost:3000/api/states')
+        return this.http.get('http://159.89.170.175:3000/api/states')
             .map(function (response) { return response.json(); });
     };
     StatesService.prototype.addState = function (state) {
-        return this.http.post("http://localhost:3000/api/states", state);
+        return this.http.post("http://159.89.170.175:3000/api/states", state);
     };
     StatesService.prototype.removeState = function (id) {
-        var url = "http://localhost:3000/api/states" + "/" + id;
+        var url = "http://159.89.170.175:3000/api/states" + "/" + id;
         return this.http.delete(url);
     };
     StatesService.prototype.updateState = function (state) {
-        var url = "http://localhost:3000/api/states" + "/" + state._id;
+        var url = "http://159.89.170.175:3000/api/states" + "/" + state._id;
         return this.http.put(url, state).map(function (success) { return success.status; });
     };
     StatesService = __decorate([
